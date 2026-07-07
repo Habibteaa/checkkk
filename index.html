@@ -71,24 +71,21 @@
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 680px;
+      max-width: 760px;           /* ← wider max-width for bigger cards */
       margin: 0 auto;
       min-height: 100vh;
-      padding: clamp(36px, 6vh, 56px) clamp(20px, 5vw, 40px) clamp(56px, 9vh, 90px);
+      padding: clamp(36px, 6vh, 56px) clamp(24px, 5vw, 48px) clamp(48px, 7vh, 80px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      /* Title stays at top, arrow pushed to bottom */
-      justify-content: flex-start;
-      gap: clamp(14px, 2.5vh, 26px);
     }
 
-    /* ── TITLE ── pinned to the top */
+    /* ── TITLE ── */
     .page-title {
       font-family: 'Great Vibes', cursive;
       font-size: clamp(42px, 10vw, 68px);
       font-weight: 400;
-      margin: 0 0 clamp(8px, 1.8vh, 20px);
+      margin: 0 0 clamp(10px, 2vh, 24px);
       background: linear-gradient(120deg, var(--pink-neon), var(--pink-deep) 45%, var(--pink-neon));
       -webkit-background-clip: text;
       background-clip: text;
@@ -122,20 +119,21 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;                  /* ← slightly more breathing room between cards */
       align-items: center;
     }
 
+    /* ── TRACK CARD ── larger, more padded */
     .track-card {
       background: var(--card-bg);
       border: 1.5px solid rgba(255,143,176,.3);
-      border-radius: 24px;
-      /* Bigger padding for roomier cards */
-      padding: 22px 26px;
+      border-radius: 28px;
+      padding: 28px 34px;         /* ← was 22px 26px */
       width: 100%;
+      min-height: 110px;          /* ← minimum height so cards feel substantial */
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 24px;                  /* ← more gap between play btn and info */
       box-shadow: 0 4px 20px rgba(255,143,176,.15);
       cursor: pointer;
       position: relative;
@@ -185,10 +183,10 @@
       100% { transform: scale(1.6); opacity: 0; }
     }
 
-    /* ── PLAY BUTTON ── slightly larger */
+    /* ── PLAY BUTTON ── larger */
     .play-btn {
       flex-shrink: 0;
-      width: 62px; height: 62px;
+      width: 72px; height: 72px;   /* ← was 62px */
       border-radius: 50%;
       background: linear-gradient(135deg, var(--pink-neon), var(--pink-deep));
       border: none;
@@ -212,7 +210,7 @@
       animation: btnGlow 2.2s ease-in-out infinite;
     }
     .play-btn svg {
-      width: 26px; height: 26px;
+      width: 30px; height: 30px;   /* ← was 26px */
       color: var(--cream-base);
       transition: transform .2s ease;
     }
@@ -234,10 +232,10 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .track-name {
-      font-size: clamp(17px, 3.5vw, 20px);
+      font-size: clamp(18px, 3.8vw, 22px);   /* ← slightly bigger */
       font-weight: 600;
       color: var(--brown-primary);
       white-space: nowrap;
@@ -247,7 +245,7 @@
     }
 
     .progress-wrap {
-      height: 7px;
+      height: 8px;                /* ← slightly thicker bar */
       background: var(--taupe);
       border-radius: 100px;
       overflow: hidden;
@@ -267,7 +265,7 @@
       display: flex;
       align-items: center;
       gap: 3.5px;
-      height: 44px;
+      height: 52px;               /* ← was 44px */
       flex-shrink: 0;
     }
     .wave-bar {
@@ -292,22 +290,21 @@
       to   { height: var(--max-h, 26px); }
     }
 
-    /* ── CONTINUE BUTTON ── pushed down with auto top margin, not hugging the bottom */
+    /* ── CONTINUE BUTTON ── pushed toward bottom with auto top margin */
     .continue-wrap {
       display: flex;
       justify-content: center;
-      margin-top: clamp(36px, 7vh, 72px);
-      margin-bottom: clamp(16px, 3vh, 32px);
+      margin-top: auto;                        /* ← pushes arrow to bottom */
+      padding-top: clamp(40px, 8vh, 80px);     /* ← ensures it's not hugging the cards */
+      padding-bottom: clamp(10px, 2vh, 20px);  /* ← small gap from very bottom edge */
     }
 
-    /* Bigger arrow button: 86px → was 66px */
+    /* ── ARROW BUTTON ── slightly bigger: 86 → 98px */
     .continue-btn {
-      margin-left: auto;
-      margin-right: auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 86px; height: 86px;
+      width: 98px; height: 98px;   /* ← was 86px */
       border-radius: 50%;
       position: relative;
       background: linear-gradient(135deg, var(--pink-neon), var(--pink-deep));
@@ -331,7 +328,7 @@
       animation: arrowGlowPulse 2.4s ease-in-out infinite;
     }
     .continue-btn svg {
-      width: 34px; height: 34px;
+      width: 38px; height: 38px;   /* ← was 34px */
       color: var(--cream-base);
       transition: transform .25s ease;
     }
@@ -357,14 +354,14 @@
     }
 
     @media (max-width: 480px) {
-      .track-card   { padding: 16px 16px; gap: 14px; border-radius: 20px; }
-      .play-btn     { width: 54px; height: 54px; }
-      .play-btn svg { width: 23px; height: 23px; }
-      .waveform     { height: 36px; gap: 2.5px; }
+      .track-card   { padding: 20px 18px; gap: 16px; border-radius: 22px; min-height: 90px; }
+      .play-btn     { width: 62px; height: 62px; }
+      .play-btn svg { width: 26px; height: 26px; }
+      .waveform     { height: 42px; gap: 2.5px; }
       .wave-bar     { width: 3.5px; }
-      .track-name   { font-size: 15px; }
-      .continue-btn { width: 74px; height: 74px; }
-      .continue-btn svg { width: 28px; height: 28px; }
+      .track-name   { font-size: 16px; }
+      .continue-btn { width: 84px; height: 84px; }
+      .continue-btn svg { width: 32px; height: 32px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
