@@ -172,9 +172,9 @@
     animation:sparkleTwinkle 1.6s ease-in-out infinite;
   }
 
-  /* ── CHANGE 1: arrow button moved lower via larger margin-top ── */
+  /* Modified margin-top to place the button lower */
   .continue-btn{
-    margin-top: 80px;
+    margin-top: 120px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -269,7 +269,7 @@
   @keyframes popUpBounce{
     0%{   opacity:0;   transform:scale(0)    translateY(22px) rotate(var(--tilt)); }
     45%{  opacity:1;   transform:scale(1.18) translateY(-10px) rotate(var(--tilt)); }
-    65%{  opacity:1;   transform:scale(.93)  translateY(3px)  rotate(var(--tilt)); }
+    65%{  opacity:1;   transform:scale(.93)  translateY(3px)   rotate(var(--tilt)); }
     82%{  opacity:1;   transform:scale(1.05) translateY(-3px) rotate(var(--tilt)); }
     100%{ opacity:1;   transform:scale(1)    translateY(0)    rotate(var(--tilt)); }
   }
@@ -536,7 +536,7 @@
 
     function endDrag(e){
       if(!dragging) return;
-      const sourceEl = grid.querySelector(`[data-slot="${dragging.source}"]`);
+      sourceEl = grid.querySelector(`[data-slot="${dragging.source}"]`);
       sourceEl.classList.remove('lifted');
       dragging.ghost.remove();
 
