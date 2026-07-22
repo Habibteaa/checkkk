@@ -1,665 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
-<title>Every Reason I Love You</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --cream-base:#FDFBF7;
-    --cream-deep:#F5EFEB;
-    --taupe:#E8DDD2;
-    --pink-soft:#FFD1DC;
-    --pink-deep:#F4A7B9;
-    --pink-neon:#FF8FB0;
-    --brown-primary:#362214;
-    --brown-muted:#9C7B67;
-    --card-back-bg:#fff0f3;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Letter For You</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-neon: #FF8FB0;
+            --pink-deep: #F4A7B9;
+            --cream-base: #FDFBF7;
+        }
 
-  *{ box-sizing:border-box; margin:0; padding:0; }
+        body {
+            background: radial-gradient(120% 90% at 50% -10%, #FDFBF7 0%, #F5EFEB 55%, #E8DDD2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Special Elite', cursive;
+        }
 
-  html,body{
-    width:100%;
-    background:radial-gradient(120% 90% at 50% -10%, var(--cream-base) 0%, var(--cream-deep) 55%, var(--taupe) 100%);
-    font-family:'DM Sans',sans-serif;
-    color:var(--brown-primary);
-    overflow-x:hidden;
-  }
+        .paper {
+            background: #FFFBF0;
+            width: 88%;
+            max-width: 680px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: clamp(28px, 5vw, 50px);
+            border: 1px solid #E8DDD2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            transform: translateY(100vh);
+            transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s;
+            box-sizing: border-box;
+        }
 
-  /* ── GLOW BLOBS ── */
-  .glow-blob{
-    position:fixed; border-radius:50%;
-    filter:blur(80px); opacity:.55;
-    pointer-events:none; z-index:0;
-    animation:drift 18s ease-in-out infinite alternate;
-  }
-  .glow-blob.a{ width:420px;height:420px;background:var(--pink-soft);top:-120px;left:-100px; }
-  .glow-blob.b{ width:380px;height:380px;background:var(--pink-deep);bottom:-140px;right:-100px;animation-delay:3s; }
-  .glow-blob.c{ width:260px;height:260px;background:var(--taupe);top:40%;left:60%;animation-delay:6s; }
-  @keyframes drift{
-    0%{ transform:translate(0,0) scale(1); }
-    100%{ transform:translate(30px,-20px) scale(1.08); }
-  }
+        .paper.slide-in { transform: translateY(0); }
 
-  /* ── FLOATING HEARTS (background) ── */
-  .float-heart{
-    position:fixed;pointer-events:none;z-index:1;
-    animation:floatUp linear infinite;
-    opacity:0;
-  }
-  @keyframes floatUp{
-    0%{ transform:translateY(105vh) rotate(var(--rot-start,0deg)) scale(var(--sc,.9)); opacity:0; }
-    8%{ opacity:.22; }
-    88%{ opacity:.08; }
-    100%{ transform:translateY(-8vh) rotate(var(--rot-end,15deg)) scale(var(--sc,.9)); opacity:0; }
-  }
+        #text-content { 
+            white-space: pre-wrap; 
+            line-height: 1.7; 
+            color: #2D1A1D; 
+            font-size: clamp(1.35rem, 3vw, 1.65rem);
+            font-weight: 500;
+        }
 
-  /* ── PARTICLES ── */
-  .particle{
-    position:fixed;border-radius:50%;pointer-events:none;z-index:1;opacity:0;
-    animation:particleRise linear infinite;
-  }
-  @keyframes particleRise{
-    0%{ transform:translateY(105vh) translateX(0); opacity:0; }
-    8%{ opacity:.45; }
-    90%{ opacity:.1; }
-    100%{ transform:translateY(-8vh) translateX(var(--dx,0px)); opacity:0; }
-  }
+        #cursor { 
+            display: inline-block; 
+            width: 3px; 
+            height: 1.3em; 
+            background: #2D1A1D; 
+            animation: blink 1s infinite; 
+            vertical-align: sub;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
 
-  /* ── CELEBRATION OVERLAY ── */
-  #celebration{
-    position:fixed;inset:0;pointer-events:none;z-index:20;
-    display:none;overflow:hidden;
-  }
-  .cel-spark{
-    position:absolute;border-radius:50%;opacity:0;
-    animation:celBurst var(--dur,1.6s) ease-out var(--del,0s) forwards;
-  }
-  @keyframes celBurst{
-    0%{ opacity:1; transform:scale(.2) translate(0,0); }
-    60%{ opacity:.85; }
-    100%{ opacity:0; transform:scale(1) translate(var(--tx,0px),var(--ty,0px)); }
-  }
+        #signature-svg { width: 220px; height: 70px; margin-top: 24px; display: block; }
+        .path { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+        .draw-sig { animation: draw 2s forwards; }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
 
-  /* ── PAGE SHELL ── */
-  .page{
-    position:relative;z-index:10;
-    min-height:100dvh;
-    display:flex;flex-direction:column;align-items:center;
-    padding:clamp(44px,7vh,80px) clamp(16px,5vw,40px) clamp(40px,7vh,72px);
-  }
+        .continue-btn {
+            margin-top: 4vh;
+            display: flex; align-items: center; justify-content: center;
+            width: 106px; height: 106px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink-neon), var(--pink-deep));
+            box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 14px 28px -10px rgba(244,167,185,.7);
+            border: none;
+            cursor: pointer;
+            transition: box-shadow .25s ease, filter .25s ease, opacity 0.6s ease;
+            animation: arrowFloat 2.4s ease-in-out infinite;
+            opacity: 0;
+            visibility: hidden;
+            text-decoration: none;
+            position: relative;
+        }
 
-  /* ── TITLE ── */
-  .page-title{
-    font-family:'Berkshire Swash',cursive;
-    font-size:clamp(22px,5vw,52px);
-    background:linear-gradient(120deg,var(--pink-neon),var(--pink-deep) 45%,var(--pink-neon));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    animation:letterGlow 2.4s ease-in-out infinite;
-    text-align:center;margin-bottom:clamp(20px, 3vh, 36px);
-    position:relative;overflow:hidden;
-  }
-  .page-title::after{
-    content:'';position:absolute;top:0;left:-40%;width:35%;height:100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,.85),transparent);
-    animation:shimmerSweep 3.2s ease-in-out infinite;
-    pointer-events:none;mix-blend-mode:overlay;
-  }
-  @keyframes shimmerSweep{ 0%{ left:-40%; } 60%,100%{ left:120%; } }
-  @keyframes letterGlow{
-    0%,100%{ filter:drop-shadow(0 0 6px rgba(255,143,176,.4)); }
-    50%{ filter:drop-shadow(0 0 18px rgba(255,143,176,.95)); }
-  }
+        .continue-btn::before {
+            content: '';
+            position: absolute; inset: -12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink-neon), var(--pink-deep));
+            opacity: .4;
+            filter: blur(14px);
+            z-index: -1;
+            animation: arrowGlowPulse 2.4s ease-in-out infinite;
+        }
 
-  /* ── PROGRESS DOT ROW ── */
-  .progress-row{
-    display:flex;gap:7px;margin-bottom:clamp(18px,3vh,36px);
-  }
-  .prog-dot{
-    width:8px;height:8px;border-radius:50%;
-    background:var(--taupe);
-    transition:background .4s ease,transform .3s ease,box-shadow .4s ease;
-  }
-  .prog-dot.done{
-    background:var(--pink-neon);
-    transform:scale(1.25);
-    box-shadow:0 0 6px 2px rgba(255,143,176,.55);
-  }
-
-  /* ── CARD GRID ── */
-  .cards-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:clamp(10px,2.5vw,22px);
-    width:100%;max-width:720px;
-    margin-bottom:clamp(28px,4vh,56px);
-  }
-
-  /* ── SINGLE CARD ── */
-  .card-wrap{
-    aspect-ratio:3/4;
-    perspective:900px;
-    cursor:pointer;
-    -webkit-tap-highlight-color:transparent;
-    transition:transform .3s ease, opacity .4s ease;
-  }
-
-  .card-inner{
-    position:relative;width:100%;height:100%;
-    transform-style:preserve-3d;
-    transition:transform .65s ease-in-out;
-    border-radius:clamp(16px,2.5vw,24px);
-  }
-
-  .card-wrap.flipped .card-inner,
-  .modal-card.flipped .card-inner { transform:rotateY(180deg); }
-
-  .card-face{
-    position:absolute;inset:0;
-    border-radius:inherit;
-    backface-visibility:hidden;
-    -webkit-backface-visibility:hidden;
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    padding:clamp(12px,2.5vw,20px);
-  }
-
-  /* FRONT */
-  .card-front{
-    background:linear-gradient(148deg,#FFDDE7 0%,var(--pink-neon) 55%,var(--pink-deep) 100%);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.65) inset,
-      0 8px 24px -8px rgba(255,143,176,.6),
-      0 2px 6px rgba(255,143,176,.2);
-    border:1.5px solid rgba(255,255,255,.45);
-  }
-
-  .front-heart{
-    width:clamp(32px,6.5vw,60px);
-    height:clamp(32px,6.5vw,60px);
-    margin-bottom:clamp(4px,1vw,10px);
-    filter:drop-shadow(0 3px 7px rgba(180,60,90,.3));
-    animation:heartbeat 2.2s ease-in-out infinite;
-    flex-shrink:0;
-  }
-  .card-wrap.flipped .front-heart{ animation-play-state:paused; }
-
-  @keyframes heartbeat{
-    0%,100%{ transform:scale(1); }
-    14%{ transform:scale(1.14); }
-    28%{ transform:scale(1); }
-    42%{ transform:scale(1.09); }
-    56%{ transform:scale(1); }
-  }
-
-  .card-number{
-    font-family:'Berkshire Swash',cursive;
-    font-size:clamp(16px,4vw,30px);
-    color:#fff;
-    text-shadow:0 2px 8px rgba(180,60,90,.35);
-  }
-
-  /* BACK */
-  .card-back{
-    background:var(--card-back-bg);
-    transform:rotateY(180deg);
-    border:1.5px solid rgba(255,143,176,.25);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.85) inset,
-      0 6px 20px -6px rgba(255,143,176,.4);
-    text-align:center;
-    transition:box-shadow .45s ease;
-    gap:8px;
-    justify-content:center;
-  }
-
-  .card-wrap.flipped .card-back,
-  .modal-card.flipped .card-back {
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.9) inset,
-      0 8px 28px -4px rgba(255,143,176,.65),
-      0 0 0 2px rgba(255,143,176,.18);
-  }
-
-  .back-mini-heart{
-    width:clamp(16px,3vw,28px);
-    height:clamp(16px,3vw,28px);
-    flex-shrink:0;
-    filter:drop-shadow(0 2px 4px rgba(244,167,185,.4));
-  }
-
-  .reason-label{
-    font-family:'Berkshire Swash',cursive;
-    font-size:clamp(11px,2vw,15px);
-    color:var(--pink-neon);
-    line-height:1;
-  }
-
-  .reason-text{
-    font-size:clamp(10px,2vw,14px);
-    color:#9e2a4b;
-    line-height:1.4;
-    font-weight:600;
-  }
-
-  /* ── CENTER MODAL POPUP ── */
-  .modal-overlay{
-    position:fixed;inset:0;
-    background:rgba(54, 34, 20, 0.52);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-    z-index:100;
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;pointer-events:none;
-    transition:opacity .4s ease;
-    padding:20px;
-  }
-
-  .modal-overlay.active{
-    opacity:1;pointer-events:auto;
-  }
-
-  .modal-card{
-    width:min(390px, 88vw);
-    aspect-ratio:3/4;
-    perspective:1000px;
-    transform:scale(.7) translateY(20px);
-    transition:transform .45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .modal-overlay.active .modal-card{
-    transform:scale(1) translateY(0);
-  }
-
-  /* ENLARGED MODAL CARD BACK LAYOUT */
-  .modal-card .card-back{
-    padding:clamp(24px, 6vw, 36px) clamp(20px, 5vw, 28px);
-    justify-content:flex-start;
-    gap:12px;
-  }
-
-  .modal-card .back-mini-heart{
-    width:clamp(36px, 9vw, 52px);
-    height:clamp(36px, 9vw, 52px);
-    margin-top:6px;
-    margin-bottom:4px;
-    filter:drop-shadow(0 4px 10px rgba(244,167,185,.6));
-  }
-
-  .modal-card .reason-label{
-    font-size:clamp(18px, 4.5vw, 24px);
-    margin-bottom:2px;
-  }
-
-  .modal-card .reason-text{
-    font-size:clamp(17px, 4.8vw, 23px); /* Significantly larger and easier to read */
-    color:#8c2340;
-    padding:0 6px;
-    line-height:1.55;
-    font-weight:600;
-  }
-
-  /* ── ARROW BUTTON ── */
-  .continue-btn{
-    display:flex;align-items:center;justify-content:center;
-    width:clamp(72px,8vw,96px);
-    height:clamp(72px,8vw,96px);
-    border-radius:50%;
-    background:linear-gradient(135deg,var(--pink-neon),var(--pink-deep));
-    box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 14px 28px -10px rgba(244,167,185,.7);
-    text-decoration:none;cursor:pointer;
-    position:relative;
-    transition:opacity .9s ease, transform .25s ease, box-shadow .25s ease, filter .25s ease;
-    opacity:0;pointer-events:none;
-  }
-  .continue-btn.visible{
-    opacity:1;pointer-events:auto;
-    animation:arrowFloat 2.4s ease-in-out infinite;
-  }
-  .continue-btn::before{
-    content:'';position:absolute;inset:-8px;border-radius:50%;
-    background:linear-gradient(135deg,var(--pink-neon),var(--pink-deep));
-    opacity:.4;filter:blur(12px);z-index:-1;
-    animation:arrowGlowPulse 2.4s ease-in-out infinite;
-  }
-  .continue-btn svg{
-    width:clamp(28px,3.2vw,40px);
-    height:clamp(28px,3.2vw,40px);
-    color:var(--cream-base);
-    transition:transform .25s ease;
-  }
-  .continue-btn:hover{
-    transform:translateY(-5px) scale(1.08) rotate(-4deg);
-    box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 20px 40px -10px rgba(255,143,176,.85);
-    filter:brightness(1.05);
-  }
-  .continue-btn:hover svg{ transform:translateX(4px) rotate(8deg); }
-  .continue-btn:active{ transform:translateY(-2px) scale(.95); }
-  @keyframes arrowFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
-  @keyframes arrowGlowPulse{
-    0%,100%{ opacity:.3;transform:scale(1); } 50%{ opacity:.6;transform:scale(1.18); }
-  }
-
-  /* ── MOBILE ── */
-  @media(max-width:440px){
-    .cards-grid{
-      grid-template-columns:repeat(3,1fr);
-      gap:8px;
-    }
-  }
-  @media(max-width:320px){
-    .cards-grid{
-      grid-template-columns:repeat(2,1fr);
-    }
-  }
-
-  /* ── REDUCED MOTION ── */
-  @media(prefers-reduced-motion:reduce){
-    .glow-blob,.page-title,.page-title::after,.front-heart,
-    .continue-btn,.continue-btn::before,.float-heart,.particle,
-    .cel-spark{ animation:none!important; }
-    .card-inner{ transition:none; }
-    .card-wrap.flipped .card-inner{ transform:rotateY(180deg); }
-    .continue-btn.visible{ opacity:1;pointer-events:auto; }
-  }
-</style>
+        .continue-btn svg { width: 42px; height: 42px; color: var(--cream-base); }
+        .continue-btn.show { opacity: 1; visibility: visible; }
+        .continue-btn:hover { box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 20px 40px -10px rgba(255,143,176,.85); filter: brightness(1.07); }
+        
+        @keyframes arrowFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+        @keyframes arrowGlowPulse { 0%,100% { opacity: .3; transform: scale(1); } 50% { opacity: .6; transform: scale(1.18); } }
+    </style>
 </head>
 <body>
 
-  <!-- Background blobs -->
-  <div class="glow-blob a"></div>
-  <div class="glow-blob b"></div>
-  <div class="glow-blob c"></div>
+    <audio id="typewriterAudio" src="typemusic.mpeg" preload="auto"></audio>
 
-  <!-- Celebration layer -->
-  <div id="celebration"></div>
+    <div class="paper" id="paper">
+        <div id="text-content">Dear Scarlet,
 
-  <!-- Center Modal Container -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-card" id="modalCard">
-      <div class="card-inner">
-        <div class="card-face card-front">
-          <svg class="front-heart" viewBox="0 0 60 56" fill="none">
-            <defs>
-              <radialGradient id="modalHg" cx="38%" cy="32%" r="72%">
-                <stop offset="0%"   stop-color="#FFF4F7"/>
-                <stop offset="48%"  stop-color="#FF8FB0"/>
-                <stop offset="100%" stop-color="#C94A6A"/>
-              </radialGradient>
-            </defs>
-            <path d="M30 52 C30 52 3 36 3 17.5
-                     C3 8.9 10.1 2 19 2
-                     C24.2 2 28.8 4.7 30 7.6
-                     C31.2 4.7 35.8 2 41 2
-                     C49.9 2 57 8.9 57 17.5
-                     C57 36 30 52 30 52Z"
-                  fill="url(#modalHg)"
-                  stroke="rgba(255,255,255,0.38)" stroke-width="1.2"/>
-            <ellipse cx="22" cy="14" rx="5" ry="3.5"
-                     fill="white" opacity=".28" transform="rotate(-28 22 14)"/>
-          </svg>
-          <span class="card-number" id="modalCardNumber">1</span>
-        </div>
-
-        <div class="card-face card-back">
-          <!-- Heart on top -->
-          <svg class="back-mini-heart" viewBox="0 0 60 56" fill="none">
-            <path d="M30 52 C30 52 3 36 3 17.5
-                     C3 8.9 10.1 2 19 2
-                     C24.2 2 28.8 4.7 30 7.6
-                     C31.2 4.7 35.8 2 41 2
-                     C49.9 2 57 8.9 57 17.5
-                     C57 36 30 52 30 52Z"
-                  fill="var(--pink-neon)"/>
-          </svg>
-          <div class="reason-label" id="modalReasonLabel"># 1</div>
-          <div class="reason-text" id="modalReasonText"></div>
-        </div>
-      </div>
+</div>
+        <span id="cursor"></span>
+        
+        <svg id="signature-svg">
+            <path id="sig-path" class="path" d="M10,40 C50,10 100,50 150,20" fill="none" stroke="#8B6969" stroke-width="2.5"/>
+            <path id="heart-path" class="path" d="M170,30 Q180,10 190,30 T200,30" fill="none" stroke="#FF69B4" stroke-width="2.5"/>
+        </svg>
     </div>
-  </div>
 
-  <main class="page">
-
-    <h1 class="page-title">Every reason I love you&hellip;</h1>
-
-    <!-- Progress dots -->
-    <div class="progress-row" id="progressRow"></div>
-
-    <!-- Cards -->
-    <div class="cards-grid" id="cardsGrid"></div>
-
-    <!-- Arrow button -->
-    <a href="music.html" class="continue-btn" id="continueBtn" aria-label="Continue">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>
-      </svg>
+    <a href="guitar.html" id="nextBtn" class="continue-btn" aria-label="Continue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>
+        </svg>
     </a>
 
-  </main>
+    <script>
+        const text = `I still remember the first moment I saw you... it felt like the world slowed down just to let me catch my breath. 
 
-<script>
-/* ── REASONS ── */
-const reasons = [
-  "The way your smile makes the whole world feel warm and right",
-  "Your laugh — I could listen to it on repeat forever",
-  "How you always know what I need before I say a single word",
-  "The look in your eyes that makes me feel completely at home",
-  "Your endless kindness that touches every soul around you",
-  "The way you hold my hand like you never want to let go",
-  "How you turn the most ordinary moments into precious memories",
-  "Your quiet strength that inspires me every single day",
-  "Simply because you are you — perfectly, beautifully, wonderfully you ♡"
-];
+Every day since then has been a gift, and I find myself falling for you more deeply with every passing second. You are the best thing that has ever happened to me, Scarlet.
 
-const TOTAL = reasons.length;
-let flippedCount = 0;
-let isAnimating = false;
+I love you more than words can ever truly capture.
 
-/* ── DOM ELEMENTS ── */
-const grid           = document.getElementById('cardsGrid');
-const progRow        = document.getElementById('progressRow');
-const btn            = document.getElementById('continueBtn');
-const modalOverlay   = document.getElementById('modalOverlay');
-const modalCard      = document.getElementById('modalCard');
-const modalCardNum   = document.getElementById('modalCardNumber');
-const modalReasonLbl = document.getElementById('modalReasonLabel');
-const modalReasonTxt = document.getElementById('modalReasonText');
+~ Peter`;
 
-/* ── BUILD CARDS ── */
-reasons.forEach((txt, i) => {
-  /* Progress dot */
-  const dot = document.createElement('div');
-  dot.className = 'prog-dot';
-  dot.id = `dot-${i}`;
-  progRow.appendChild(dot);
+        const content = document.getElementById('text-content');
+        const cursor = document.getElementById('cursor');
+        const audio = document.getElementById('typewriterAudio');
+        const paper = document.getElementById('paper');
 
-  /* Grid Card representation */
-  const wrap = document.createElement('div');
-  wrap.className = 'card-wrap';
-  wrap.id = `card-${i}`;
-  wrap.setAttribute('role','button');
-  wrap.setAttribute('aria-label',`Reason ${i+1}`);
-  wrap.setAttribute('tabindex','0');
+        async function typeLetter() {
+            // Trigger audio
+            audio.play().catch(e => console.log("Audio play blocked until interaction"));
 
-  wrap.innerHTML = `
-    <div class="card-inner">
-      <div class="card-face card-front">
-        <svg class="front-heart" viewBox="0 0 60 56" fill="none">
-          <defs>
-            <radialGradient id="hg${i}" cx="38%" cy="32%" r="72%">
-              <stop offset="0%"   stop-color="#FFF4F7"/>
-              <stop offset="48%"  stop-color="#FF8FB0"/>
-              <stop offset="100%" stop-color="#C94A6A"/>
-            </radialGradient>
-          </defs>
-          <path d="M30 52 C30 52 3 36 3 17.5
-                   C3 8.9 10.1 2 19 2
-                   C24.2 2 28.8 4.7 30 7.6
-                   C31.2 4.7 35.8 2 41 2
-                   C49.9 2 57 8.9 57 17.5
-                   C57 36 30 52 30 52Z"
-                fill="url(#hg${i})"
-                stroke="rgba(255,255,255,0.38)" stroke-width="1.2"/>
-          <ellipse cx="22" cy="14" rx="5" ry="3.5"
-                   fill="white" opacity=".28" transform="rotate(-28 22 14)"/>
-        </svg>
-        <span class="card-number">${i + 1}</span>
-      </div>
+            for (let char of text) {
+                content.innerHTML += char;
+                paper.scrollTop = paper.scrollHeight; // Keep view auto-scrolled as text types
+                let delay = Math.random() * 20 + 50; 
+                if (char === '.' || char === ',') delay = 400;
+                if (char === '\n') delay = 600;
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+            
+            cursor.style.display = 'none';
+            document.getElementById('sig-path').classList.add('draw-sig');
+            document.getElementById('heart-path').classList.add('draw-sig');
+            
+            // Wait for signature animation (2s), fade out audio, show button
+            setTimeout(() => {
+                let fadeAudio = setInterval(() => {
+                    if (audio.volume > 0.05) {
+                        audio.volume -= 0.05;
+                    } else {
+                        audio.pause();
+                        audio.volume = 1;
+                        clearInterval(fadeAudio);
+                    }
+                }, 50);
 
-      <div class="card-face card-back">
-        <svg class="back-mini-heart" viewBox="0 0 60 56" fill="none">
-          <path d="M30 52 C30 52 3 36 3 17.5
-                   C3 8.9 10.1 2 19 2
-                   C24.2 2 28.8 4.7 30 7.6
-                   C31.2 4.7 35.8 2 41 2
-                   C49.9 2 57 8.9 57 17.5
-                   C57 36 30 52 30 52Z"
-                fill="var(--pink-deep)"/>
-        </svg>
-        <div class="reason-label"># ${i + 1}</div>
-        <div class="reason-text">${txt}</div>
-      </div>
-    </div>
-  `;
+                document.getElementById('nextBtn').classList.add('show');
+                paper.style.boxShadow = "0 0 25px rgba(255, 105, 180, 0.35)";
+            }, 2000);
+        }
 
-  const doPopup = () => {
-    if (wrap.classList.contains('flipped') || isAnimating) return;
-    
-    isAnimating = true;
-
-    // Set modal content
-    modalCardNum.textContent = i + 1;
-    modalReasonLbl.textContent = `# ${i + 1}`;
-    modalReasonTxt.textContent = txt;
-
-    // Reset flip state before opening
-    modalCard.classList.remove('flipped');
-    modalOverlay.classList.add('active');
-
-    // Flip open in center after modal appears
-    setTimeout(() => {
-      modalCard.classList.add('flipped');
-    }, 150);
-
-    // After 3 seconds, close the modal
-    setTimeout(() => {
-      modalOverlay.classList.remove('active');
-      
-      // Mark grid card as flipped/done
-      wrap.classList.add('flipped');
-      document.getElementById(`dot-${i}`).classList.add('done');
-      
-      flippedCount++;
-      isAnimating = false;
-
-      if (flippedCount === TOTAL) {
-        setTimeout(() => {
-          launchCelebration();
-          btn.classList.add('visible');
-        }, 400);
-      }
-    }, 3000);
-  };
-
-  wrap.addEventListener('click', doPopup);
-  wrap.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') doPopup(); });
-
-  grid.appendChild(wrap);
-});
-
-/* ── FLOATING HEARTS ── */
-const heartPath = `<path d="M15 26 C15 26 1 18 1 8.8
-                   C1 4.4 5 1 9.5 1
-                   C12.1 1 14.4 2.3 15 3.8
-                   C15.6 2.3 17.9 1 20.5 1
-                   C25 1 29 4.4 29 8.8
-                   C29 18 15 26 15 26Z"
-                  fill="var(--pink-soft)"/>`;
-
-for (let h = 0; h < 10; h++) {
-  const size   = 12 + Math.random() * 20;
-  const left   = Math.random() * 100;
-  const dur    = 14 + Math.random() * 16;
-  const delay  = Math.random() * 10;
-  const rotS   = (Math.random()-0.5)*20 + 'deg';
-  const rotE   = (Math.random()-0.5)*20 + 'deg';
-
-  const el = document.createElement('div');
-  el.className = 'float-heart';
-  el.style.cssText = `
-    left:${left}%;
-    width:${size}px; height:${size}px;
-    animation-duration:${dur}s;
-    animation-delay:${delay}s;
-    --rot-start:${rotS};
-    --rot-end:${rotE};
-  `;
-  el.innerHTML = `<svg viewBox="0 0 30 28" width="${size}" height="${size}"
-                       fill="none" xmlns="http://www.w3.org/2000/svg"
-                       style="opacity:.38;">${heartPath}</svg>`;
-  document.body.appendChild(el);
-}
-
-/* ── PINK PARTICLES ── */
-for (let p = 0; p < 14; p++) {
-  const size  = 3 + Math.random() * 5;
-  const left  = Math.random() * 100;
-  const dur   = 9 + Math.random() * 11;
-  const delay = Math.random() * 8;
-  const dx    = (Math.random()-0.5)*70;
-  const col   = Math.random() > 0.5 ? 'var(--pink-neon)' : 'var(--pink-soft)';
-
-  const el = document.createElement('div');
-  el.className = 'particle';
-  el.style.cssText = `
-    width:${size}px; height:${size}px;
-    left:${left}%;
-    background:${col};
-    animation-duration:${dur}s;
-    animation-delay:${delay}s;
-    --dx:${dx}px;
-  `;
-  document.body.appendChild(el);
-}
-
-/* ── CELEBRATION SPARKLES ── */
-function launchCelebration () {
-  const cel = document.getElementById('celebration');
-  cel.style.display = 'block';
-  const colors = ['#FF8FB0','#FFD1DC','#FFFFFF','#F4A7B9','#FFE3EA'];
-
-  for (let w = 0; w < 3; w++) {        /* 3 waves */
-    setTimeout(() => {
-      for (let s = 0; s < 18; s++) {
-        const sp = document.createElement('div');
-        sp.className = 'cel-spark';
-        const sz = 6 + Math.random() * 12;
-        const tx = (Math.random()-0.5)*260;
-        const ty = (Math.random()-0.5)*200;
-        const dur = 1.2 + Math.random()*.8;
-        const del = Math.random()*.25;
-        sp.style.cssText = `
-          width:${sz}px; height:${sz}px;
-          left:${20+Math.random()*60}%;
-          top:${15+Math.random()*60}%;
-          background:${colors[Math.floor(Math.random()*colors.length)]};
-          border-radius:${Math.random()>0.5?'50%':'3px'};
-          --tx:${tx}px; --ty:${ty}px;
-          --dur:${dur}s; --del:${del}s;
-        `;
-        cel.appendChild(sp);
-        setTimeout(() => sp.remove(), (dur + del) * 1000 + 200);
-      }
-    }, w * 350);
-  }
-}
-</script>
-
+        window.onload = () => {
+            paper.classList.add('slide-in');
+            setTimeout(typeLetter, 1500);
+        };
+    </script>
 </body>
 </html>
